@@ -6,6 +6,8 @@ export default class Chart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      url: _.get(this.props, 'url', ''),
+      chartTitle: _.get(this.props, 'chartTitle', ''),
       data: {},
       dataSet: {
         datasets: [{
@@ -27,6 +29,14 @@ export default class Chart extends Component {
     };
   }
   componentWillMount() {
+    fetch(this.state.url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json()).then((data) => {
+      console.log(data);
+    }).catch();
     this.getData(this.props);
   }
   getData(props) {
@@ -71,7 +81,7 @@ export default class Chart extends Component {
       },
       title: {
         display: true,
-        text: 'Total Open Projects for Company Design Center',
+        text: this.state.chartTitle,
       },
       animation: {
         animateScale: true,
@@ -79,7 +89,7 @@ export default class Chart extends Component {
       },
     };
     return (
-      <div style={{ width: '33%' }}><Doughnut data={this.state.dataSet} options={options} height={150} width={300} getElementAtEvent={dataset => this.selectedData(dataset)} />
+      <div style={{ width: '100%' }}><Doughnut data={this.state.dataSet} options={options} height={150} width={300} getElementAtEvent={dataset => this.selectedData(dataset)} />
       </div>
     );
   }

@@ -16,22 +16,38 @@ export default class Table extends Component {
     }
   }
   render() {
+    const styles = {
+      table: {
+        borderCollapse: 'collapse',
+        width: '100%',
+      },
+      td: {
+        border: '1px solid #dddddd',
+        textAlign: 'left',
+        padding: '8px',
+      },
+      th: {
+        border: '1px solid #dddddd',
+        textAlign: 'left',
+        padding: '8px',
+      },
+    };
     return (
       <div>
-        <table width="100%">
+        <table style={styles.table}>
           <tr>
-            <th>Project Id</th>
-            <th>Customer</th>
-            <th>Task Promised</th>
+            <th style={styles.th}>Project Id</th>
+            <th style={styles.th}>Customer</th>
+            <th style={styles.th}>Task Promised</th>
           </tr>
           {
            _.map(this.state.data, (item, key) => {
              if (_.get(item, 'Task_Promised', false) !== 'null') {
                return (
                  <tr key={key}>
-                   <td>{_.get(item, 'Project_Id', '')}</td>
-                   <td>{_.get(item, 'Customer', '')}</td>
-                   <td>{_.get(item, 'Task_Promised', '')}</td>
+                   <td style={styles.td}>{_.get(item, 'Project_Id', '')}</td>
+                   <td style={styles.td}>{_.get(item, 'Customer', '')}</td>
+                   <td style={styles.td}>{_.get(item, 'Task_Promised', '')}</td>
                  </tr>
                );
              } return null;
